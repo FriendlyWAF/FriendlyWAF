@@ -22,9 +22,9 @@ clear
 sleep 3
 cd /root/
 sleep 2
-sudo apt update && sudo apt upgrade -y
+apt update && apt upgrade -y
 sleep 2
-sudo apt install software-properties-common -y
+apt install software-properties-common -y
 sleep 2
 curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
 sleep 2
@@ -366,26 +366,26 @@ RemainAfterExit=yes
 WantedBy=default.target" > snort3-nic.service
 sleep 2
 fi
-sudo systemctl daemon-reload
+systemctl daemon-reload
 sleep 2
-sudo systemctl start snort3-nic.service
-sudo systemctl enable snort3-nic.service
+systemctl start snort3-nic.service
+systemctl enable snort3-nic.service
 sleep 2
-sudo mkdir -p /usr/local/etc/rules
+mkdir -p /usr/local/etc/rules
 sleep 2
 # Snort Rules Default ones
-sudo wget -qO- https://www.snort.org/downloads/community/snort3-community-rules.tar.gz | tar xz -C /usr/local/etc/rules/
+wget -qO- https://www.snort.org/downloads/community/snort3-community-rules.tar.gz | tar xz -C /usr/local/etc/rules/
 sleep 2
 cd /root/
 sleep 2
-sudo wget https://www.snort.org/downloads/openappid/33380 -O snort-openappid.tar.gz
+wget https://www.snort.org/downloads/openappid/33380 -O snort-openappid.tar.gz
 sleep 2
-sudo tar -xzvf snort-openappid.tar.gz
+tar -xzvf snort-openappid.tar.gz
 sleep 2
-sudo cp -R odp /usr/local/lib/
-sudo mkdir -p /var/log/snort
+cp -R odp /usr/local/lib/
+mkdir -p /var/log/snort
 sleep 2
-sudo snort -c /usr/local/etc/snort/snort.lua
+snort -c /usr/local/etc/snort/snort.lua
 sleep 5
 cd /etc/systemd/system/
 sleep 2
@@ -418,11 +418,11 @@ sleep 2
 fi
 cd /root/
 sleep 2
-sudo rm -R *
+rm -R *
 sleep 2
-sudo systemctl daemon-reload
+systemctl daemon-reload
 sleep 2
-sudo systemctl enable --now snort3
+systemctl enable --now snort3
 sleep 2
 cd /etc/
 sleep 2
@@ -447,19 +447,19 @@ clear
 ######################################################################################
 ######################################################################################
 sleep 2592000
-sudo apt update && sudo apt upgrade -y
+apt update && apt upgrade -y
 sleep 2
 mkdir -p /etc/auto-upgrade/
 sleep 2
 cd /etc/auto-upgrade/
 sleep 2
-sudo wget https://raw.githubusercontent.com/netwerkfix/FriendlyWAF/main/hotfix.sh
+wget https://raw.githubusercontent.com/FriendlyWAF/FriendlyWAF/main/hotfix.sh
 sleep 2
-sudo chmod 755 hotfix.sh
+chmod 755 hotfix.sh
 sleep 2
-sudo bash /etc/auto-upgrade/hotfix.sh
+bash /etc/auto-upgrade/hotfix.sh
 sleep 2
-sudo rm -R /etc/auto-upgrade
+rm -R /etc/auto-upgrade
 sleep 1
 clear
 
@@ -491,14 +491,14 @@ SyslogIdentifier=Diskutilization
 [Install]
 WantedBy=multi-user.target " > auto-update.service
 sleep 2
-sudo systemctl enable --now auto-update.service
+systemctl enable --now auto-update.service
 sleep 2
 cd /home/friendlyadmin/
 # Custom Made Wireguard Installer Script for tunneling your apps true the System without port-forwarding
 sleep 2
-sudo wget https://mirror.friendlywaf.com/Wireguard/Wireguard-installer.sh
+wget https://mirror.friendlywaf.com/Wireguard/Wireguard-installer.sh
 sleep 2
-sudo chmod 755 Wireguard-installer.sh
+chmod 755 Wireguard-installer.sh
 # Comment for knowlegd your system version and IPv4 address to managed
 sleep 2
 echo "################################################################################
