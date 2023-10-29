@@ -258,7 +258,7 @@ sleep 2
 # installing Web Panel
 cd /var/www/html/
 sleep 2
-wget https://friendlywaf.ams3.digitaloceanspaces.com/WAF/Script-CE/WebPanel.zip
+wget https://mirror.friendlywaf.com/Scripts-CE/WebPanel.zip
 sleep 2
 sudo unzip WebPanel.zip
 sleep 2
@@ -295,7 +295,7 @@ make install
 sleep 2
 cd /root/
 # Custom Config made by Us of Snort ++
-wget https://friendlywaf.ams3.digitaloceanspaces.com/WAF/Script-CE/snort3-3.1.72.0.zip
+wget https://mirror.friendlywaf.com/Scripts-CE/snort3-3.1.72.0.zip
 sleep 2
 unzip snort3-3.1.72.0.zip
 sleep 2
@@ -496,7 +496,7 @@ sleep 2
 cd /home/friendlyadmin/
 # Custom Made Wireguard Installer Script for tunneling your apps true the System without port-forwarding
 sleep 2
-wget https://friendlywaf.ams3.digitaloceanspaces.com/WAF/Script-CE/Wireguard-installer.sh
+wget https://mirror.friendlywaf.com/Scripts-CE/Wireguard-installer.sh
 sleep 2
 chmod 755 Wireguard-installer.sh
 # Comment for knowlegd your system version and IPv4 address to managed
