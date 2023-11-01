@@ -279,13 +279,13 @@ make
 sleep 2
 make install
 sleep 2
-wget https://github.com/gperftools/gperftools/releases/download/gperftools-2.9.1/gperftools-2.9.1.tar.gz
+wget https://github.com/gperftools/gperftools/archive/refs/tags/gperftools-2.13.tar.gz
 sleep 2
-tar xzf gperftools-2.9.1.tar.gz
+tar xzf gperftools-2.13.tar.gz
 sleep 2
 chmod 755 -R *
 sleep 2
-cd gperftools-2.9.1/
+cd gperftools-2.13/
 sleep 2
 ./configure
 sleep 2
