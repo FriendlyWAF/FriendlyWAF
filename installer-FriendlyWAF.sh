@@ -502,7 +502,7 @@ chmod 755 Wireguard-installer.sh
 # Comment for knowlegd your system version and IPv4 address to managed
 sleep 2
 echo "################################################################################
-                                FriendlyWAF v1.4
+                                FriendlyWAF v2.0
         Welcome To Our Software FriendlyWAF a Free Used Software.
 
                 Web-Panel: http://\4/
