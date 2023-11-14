@@ -327,18 +327,6 @@ sleep 3
 systemctl start snort3
 sleep 2592000
 apt update && apt upgrade -y
-sleep 2
-mkdir -p /etc/auto-upgrade/
-sleep 2
-cd /etc/auto-upgrade/
-sleep 2
-wget https://raw.githubusercontent.com/FriendlyWAF/FriendlyWAF/main/hotfix.sh
-sleep 2
-chmod 755 hotfix.sh
-sleep 2
-bash /etc/auto-upgrade/hotfix.sh
-sleep 2
-rm -R /etc/auto-upgrade
 sleep 1
 clear
 
