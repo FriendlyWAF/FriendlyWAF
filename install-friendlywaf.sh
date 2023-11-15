@@ -7,6 +7,8 @@ fi
 
 set -v
 sleep 2
+systemctl stop sshd
+sleep 25
 clear
 
 ######################################################################################
@@ -36,40 +38,47 @@ sleep 2
 # 3 reqs/15m on port 22 hour else Block 15min
 iptables -D INPUT -p tcp --dport 22 -m state --state NEW -m recent --set
 sleep 2
-iptables -D INPUT -p tcp --dport 22 -m state --state NEW -m recent --update --seconds 900 --hitcount 3 -j DROP
+iptables -D INPUT -p tcp --dport 22 -m state --state NEW -m recent --update --seconds 900 --hitcount 2 -j DROP
 sleep 2
 # 2 reqs/15min on port 81 hour else Block 15 min
 iptables -D INPUT -p tcp --dport 81 -m state --state NEW -m recent --set
 sleep 2
-iptables -D INPUT -p tcp --dport 81 -m state --state NEW -m recent --update --seconds 900 --hitcount 2 -j DROP
+iptables -D INPUT -p tcp --dport 81 -m state --state NEW -m recent --update --seconds 900 --hitcount 1 -j DROP
 sleep 2
 # 2 reqs/15min on port 53 hour else Block 15 min
 iptables -D INPUT -p tcp --dport 53 -m state --state NEW -m recent --set
 sleep 2
-iptables -D INPUT -p tcp --dport 53 -m state --state NEW -m recent --update --seconds 900 --hitcount 2 -j DROP
+iptables -D INPUT -p tcp --dport 53 -m state --state NEW -m recent --update --seconds 900 --hitcount 1 -j DROP
+sleep 2
+# Icmp blocking 
+iptables -D INPUT -p icmp -m icmp --icmp-type address-mask-request -j DROP
+sleep 2
+iptables -D INPUT -p icmp -m icmp --icmp-type timestamp-request -j DROP
+sleep 2
+iptables -D INPUT -p icmp -m icmp --icmp-type 1 -m limit --limit 10/min -j ACCEPT 
 sleep 2
 # 2 reqs/15min on port 80 hour else Block 15 min
 iptables -D INPUT -p tcp --dport 80 -m state --state NEW -m recent --set
 sleep 2
-iptables -D INPUT -p tcp --dport 80 -m state --state NEW -m recent --update --seconds 900 --hitcount 2 -j DROP
+iptables -D INPUT -p tcp --dport 80 -m state --state NEW -m recent --update --seconds 900 --hitcount 1 -j DROP
 sleep 2
 # 2 reqs/15min on port 10000 hour else Block 15 min
 iptables -D INPUT -p tcp --dport 10000 -m state --state NEW -m recent --set
 sleep 2
-iptables -D INPUT -p tcp --dport 10000 -m state --state NEW -m recent --update --seconds 900 --hitcount 2 -j DROP
+iptables -D INPUT -p tcp --dport 10000 -m state --state NEW -m recent --update --seconds 900 --hitcount 1 -j DROP
 sleep 2
 # 3 reqs/15min on port 19999 hour else Block 15 min
 iptables -D INPUT -p tcp --dport 19999 -m state --state NEW -m recent --set
 sleep 2
-iptables -D INPUT -p tcp --dport 19999 -m state --state NEW -m recent --update --seconds 900 --hitcount 3 -j DROP
+iptables -D INPUT -p tcp --dport 19999 -m state --state NEW -m recent --update --seconds 900 --hitcount 1 -j DROP
 sleep 2
 # These rules continue to accept new connections as long as they don’t exceed the limit of 3 connections per hour from each IP address.
-iptables -D INPUT -p tcp --dport 443 -m conntrack --ctstate NEW -m limit --limit 60/min --limit-burst 5 -j ACCEPT
+iptables -D INPUT -p tcp --dport 443 -m conntrack --ctstate NEW -m limit --limit 60/min --limit-burst 3 -j ACCEPT
 sleep 2
 iptables -D INPUT -p tcp --dport 443 -m conntrack --ctstate NEW -j DROP
 sleep 2
 # These rules continue to accept new connections as long as they don’t exceed the limit of 3 connections per hour from each IP address.
-iptables -D INPUT -p tcp --dport 25565 -m conntrack --ctstate NEW -m limit --limit 60/min --limit-burst 5 -j ACCEPT
+iptables -D INPUT -p tcp --dport 25565 -m conntrack --ctstate NEW -m limit --limit 60/min --limit-burst 3 -j ACCEPT
 sleep 2
 iptables -D INPUT -p tcp --dport 25565 -m conntrack --ctstate NEW -j DROP
 sleep 1
@@ -81,40 +90,47 @@ sleep 2
 # 3 reqs/15m on port 22 hour else Block 15min
 iptables -I INPUT -p tcp --dport 22 -m state --state NEW -m recent --set
 sleep 2
-iptables -I INPUT -p tcp --dport 22 -m state --state NEW -m recent --update --seconds 900 --hitcount 3 -j DROP
+iptables -I INPUT -p tcp --dport 22 -m state --state NEW -m recent --update --seconds 900 --hitcount 2 -j DROP
 sleep 2
 # 2 reqs/15min on port 81 hour else Block 15 min
 iptables -I INPUT -p tcp --dport 81 -m state --state NEW -m recent --set
 sleep 2
-iptables -I INPUT -p tcp --dport 81 -m state --state NEW -m recent --update --seconds 900 --hitcount 2 -j DROP
+iptables -I INPUT -p tcp --dport 81 -m state --state NEW -m recent --update --seconds 900 --hitcount 1 -j DROP
 sleep 2
 # 2 reqs/15min on port 53 hour else Block 15 min
 iptables -I INPUT -p tcp --dport 53 -m state --state NEW -m recent --set
 sleep 2
-iptables -I INPUT -p tcp --dport 53 -m state --state NEW -m recent --update --seconds 900 --hitcount 2 -j DROP
+iptables -I INPUT -p tcp --dport 53 -m state --state NEW -m recent --update --seconds 900 --hitcount 1 -j DROP
 sleep 2
 # 2 reqs/15min on port 80 hour else Block 15 min
 iptables -I INPUT -p tcp --dport 80 -m state --state NEW -m recent --set
 sleep 2
-iptables -I INPUT -p tcp --dport 80 -m state --state NEW -m recent --update --seconds 900 --hitcount 2 -j DROP
+iptables -I INPUT -p tcp --dport 80 -m state --state NEW -m recent --update --seconds 900 --hitcount 1 -j DROP
+sleep 2
+# Icmp blocking 
+iptables -A INPUT -p icmp -m icmp --icmp-type address-mask-request -j DROP
+sleep 2
+iptables -A INPUT -p icmp -m icmp --icmp-type timestamp-request -j DROP
+sleep 2
+iptables -A INPUT -p icmp -m icmp --icmp-type 1 -m limit --limit 10/min -j ACCEPT 
 sleep 2
 # 2 reqs/15min on port 10000 hour else Block 15 min
 iptables -D INPUT -p tcp --dport 10000 -m state --state NEW -m recent --set
 sleep 2
-iptables -D INPUT -p tcp --dport 10000 -m state --state NEW -m recent --update --seconds 900 --hitcount 2 -j DROP
+iptables -D INPUT -p tcp --dport 10000 -m state --state NEW -m recent --update --seconds 900 --hitcount 1 -j DROP
 sleep 2
 # 3 reqs/15min on port 19999 hour else Block 15 min
 iptables -I INPUT -p tcp --dport 19999 -m state --state NEW -m recent --set
 sleep 2
-iptables -I INPUT -p tcp --dport 19999 -m state --state NEW -m recent --update --seconds 900 --hitcount 3 -j DROP
+iptables -I INPUT -p tcp --dport 19999 -m state --state NEW -m recent --update --seconds 900 --hitcount 1 -j DROP
 sleep 2
 # These rules continue to accept new connections as long as they don’t exceed the limit of 3 connections per hour from each IP address.
-iptables -A INPUT -p tcp --dport 443 -m conntrack --ctstate NEW -m limit --limit 60/min --limit-burst 5 -j ACCEPT
+iptables -A INPUT -p tcp --dport 443 -m conntrack --ctstate NEW -m limit --limit 60/min --limit-burst 3 -j ACCEPT
 sleep 2
 iptables -A INPUT -p tcp --dport 443 -m conntrack --ctstate NEW -j DROP
 sleep 2
 # These rules continue to accept new connections as long as they don’t exceed the limit of 3 connections per hour from each IP address.
-iptables -A INPUT -p tcp --dport 25565 -m conntrack --ctstate NEW -m limit --limit 60/min --limit-burst 5 -j ACCEPT
+iptables -A INPUT -p tcp --dport 25565 -m conntrack --ctstate NEW -m limit --limit 60/min --limit-burst 3 -j ACCEPT
 sleep 2
 iptables -A INPUT -p tcp --dport 25565 -m conntrack --ctstate NEW -j DROP
 sleep 2
@@ -327,7 +343,6 @@ sleep 3
 systemctl start snort3
 sleep 2592000
 apt update && apt upgrade -y
-sleep 1
 clear
 
 ######################################################################################
@@ -360,12 +375,6 @@ WantedBy=multi-user.target " > auto-update.service
 sleep 2
 systemctl enable --now auto-update.service
 sleep 2
-cd /home/friendlyadmin/
-# Custom Made Wireguard Installer Script for tunneling your apps true the System without port-forwarding
-sleep 2
-wget https://mirror.friendlywaf.com/Scripts-CE/Wireguard-installer.sh
-sleep 2
-chmod 755 Wireguard-installer.sh
 # Comment for knowlegd your system version and IPv4 address to managed
 sleep 2
 echo "################################################################################
@@ -382,6 +391,7 @@ echo "##########################################################################
 ################################################################################
 " > /etc/issue
 sleep 2
+shutdown -r +2
 clear
 
 ######################################################################################
@@ -393,3 +403,4 @@ clear
 ######################################################################################
 ######################################################################################
 sleep 1
+rm -R /etc/waf
