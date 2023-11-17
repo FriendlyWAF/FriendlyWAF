@@ -384,10 +384,6 @@ echo "##########################################################################
                 Web-Panel: http://\4/
                 SSH: \4
 
-                User: friendlyadmin
-                Pass: friendlyadmin
-                Mail: client@friendlywaf.com
-
 ################################################################################
 " > /etc/issue
 sleep 2
