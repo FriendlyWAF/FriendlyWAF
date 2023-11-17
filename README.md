@@ -11,11 +11,11 @@ ____
 Small	30,000 Req/s	4vCore	4Gb Ram	1gbps	DDoS Prot of DC <br>
 Medium	100,000 Req/s	8vCore	16Gb Ram	5gbps	DDoS Prot of DC<br>
 Large	500,000 Req/s	12vCore	32Gb Ram	10gbps	DDoS Prot of DC<br>
-Extra Large	1,000,000 Req/s	16vCore	32Gb Ram	25gbps	DDoS Prot of DC<br>
+Extra Large	1,000,000 Req/s	16vCore	32Gb Ram	25gbps	DDoS Prot of DC<br><br>
 
 
 Step.1<br>
-Download Debian 12.2
+Download Debian 12.2<br>
 
 
 Step.2<br>
