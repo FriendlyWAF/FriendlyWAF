@@ -6,9 +6,7 @@ if [ `id -u` -ne 0 ]; then
 fi
 
 set -v
-sleep 2
-systemctl stop sshd
-sleep 25
+sleep 5
 clear
 
 ######################################################################################
