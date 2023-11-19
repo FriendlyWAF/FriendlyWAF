@@ -43,9 +43,9 @@ Step.5<br>
 Install Webmin<br>
 
 $ sudo apt install software-properties-common apt-transport-https<br>
-$ curl -fsSL https://download.webmin.com/jcameron-key.asc | sudo gpg --dearmor -o /usr/share/keyrings/webmin.gpg<br>
+$ curl -fsSL https://download.webmin.com/jcameron-key.asc | sudo gpg --dearmor -o /usr/share/keyrings/webmin.gpg<br><br>
 $ sudo nano /etc/apt/sources.list<br>
-+++++++
++++++++<br>
 deb [signed-by=/usr/share/keyrings/webmin.gpg] http://download.webmin.com/download/repository sarge contrib<br>
 ++++++<br>
 past this in that config<br>
