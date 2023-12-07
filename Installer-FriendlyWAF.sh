@@ -179,7 +179,7 @@ make install
 sleep 2
 cd /root/
 # Custom Config made by Us of Snort ++
-https://mirror.friendlywaf.com/Scripts-CE/snort3-3.1.76.0.zip
+wget https://mirror.friendlywaf.com/Scripts-CE/snort3-3.1.76.0.zip
 sleep 2
 unzip snort3-3.1.76.0.zip
 sleep 2
