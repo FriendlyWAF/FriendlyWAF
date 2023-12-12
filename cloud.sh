@@ -37,6 +37,8 @@ allow-hotplug $uplink
 iface $uplink inet dhcp
 " > interfaces
 fi
+sleep 2
+systemctl restart networking
 sleep 23
 clear
 
