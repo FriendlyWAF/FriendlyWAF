@@ -35,31 +35,14 @@ Uncommend it<br>
 Step.4<br>
 Install tools<br>
 
-$ apt install sudo nano ethtool curl cmake wget bind9 apache2 unzip nload docker iptables-persistent docker-compose git build-essential libpcap-dev libpcre3-dev libnet1-dev zlib1g-dev luajit hwloc libdumbnet-dev bison flex liblzma-dev openssl libssl-dev pkg-config libhwloc-dev cmake cpputest libsqlite3-dev uuid-dev libcmocka-dev libnetfilter-queue-dev libmnl-dev autotools-dev libluajit-5.1-dev libunwind-dev libfl-dev -y<br>
+$ apt install sudo nano ethtool curl cmake wget unzip ufw nload git build-essential libpcap-dev libpcre3-dev libnet1-dev zlib1g-dev luajit hwloc libdumbnet-dev bison flex liblzma-dev openssl libssl-dev pkg-config libhwloc-dev cmake cpputest libsqlite3-dev uuid-dev libcmocka-dev libnetfilter-queue-dev libmnl-dev autotools-dev libluajit-5.1-dev libunwind-dev libfl-dev -y
+
+$ sudo apt install software-properties-common apt-transport-https
 
 Step.5<br>
-Install Webmin<br>
+Install Nginx Proxy Manager on the host its self = Reverse Proxy with Lets Encrypt SSL<br>
 
-$ sudo apt install software-properties-common apt-transport-https<br>
-$ curl -fsSL https://download.webmin.com/jcameron-key.asc | sudo gpg --dearmor -o /usr/share/keyrings/webmin.gpg<br><br>
-$ sudo nano /etc/apt/sources.list<br>
-+++++++<br>
-deb [signed-by=/usr/share/keyrings/webmin.gpg] http://download.webmin.com/download/repository sarge contrib<br>
-++++++<br>
-past this in that config<br>
+$ sh -c "$(wget --no-cache -qO- https://raw.githubusercontent.com/ej52/proxmox/main/install.sh)" -s --app nginx-proxy-manager
 
 Step.6<br>
-Update<br>
-$ apt update<br>
-
-Step.7<br>
-Install Webmin<br>
-$ sudo apt install webmin -y<br>
-$ sudo systemctl enable --now webmin<br>
-
-Step.8<br>
-install Nginx Proxy or a Reverse proxy Manager<br>
-find it online, recommed with docker not diret on host best is on Docker compose<br>
-
-Step.9<br>
 Download the script or check it on this github called by Installer-Friendlywaf.sh<br>
