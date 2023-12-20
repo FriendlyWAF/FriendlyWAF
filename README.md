@@ -19,7 +19,7 @@ Download Debian 12.2<br>
 Step.2<br>
 Update the system<br>
 
-$ apt update && apt upgrade -y<br>
+$ sudo apt update && sudo apt upgrade -y<br>
 
 Step.3<br>
 Allow IPV4 forward<br>
@@ -35,14 +35,14 @@ Uncommend it<br>
 Step.4<br>
 Install tools<br>
 
-$ apt install sudo nano ethtool curl cmake wget unzip ufw nload git build-essential libpcap-dev libpcre3-dev libnet1-dev zlib1g-dev luajit hwloc libdumbnet-dev bison flex liblzma-dev openssl libssl-dev pkg-config libhwloc-dev cmake cpputest libsqlite3-dev uuid-dev libcmocka-dev libnetfilter-queue-dev libmnl-dev autotools-dev libluajit-5.1-dev libunwind-dev libfl-dev -y
+$ sudo apt install sudo nano ethtool curl cmake wget unzip ufw nload git build-essential libpcap-dev libpcre3-dev libnet1-dev zlib1g-dev luajit hwloc libdumbnet-dev bison flex liblzma-dev openssl libssl-dev pkg-config libhwloc-dev cmake cpputest libsqlite3-dev uuid-dev libcmocka-dev libnetfilter-queue-dev libmnl-dev autotools-dev libluajit-5.1-dev libunwind-dev libfl-dev -y
 
 $ sudo apt install software-properties-common apt-transport-https
 
 Step.5<br>
 Install Nginx Proxy Manager on the host its self = Reverse Proxy with Lets Encrypt SSL<br>
 
-$ sh -c "$(wget --no-cache -qO- https://raw.githubusercontent.com/ej52/proxmox/main/install.sh)" -s --app nginx-proxy-manager
+$ sudo sh -c "$(wget --no-cache -qO- https://raw.githubusercontent.com/ej52/proxmox/main/install.sh)" -s --app nginx-proxy-manager
 
 Step.6<br>
 Download the script or check it on this github called by Installer-Friendlywaf.sh<br>
