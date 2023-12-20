@@ -4,8 +4,6 @@ ____
 <h4>FriendlyWAF is A OpenSource Web Application Firewall</h4>
 
 <h5>Owner Netwerkfix and sponser by Netwerkfix.com</h5>
-<a href="https://friendlywaf.com/">FriendlyWAF.com</a>
-
 
 <h4>Specifications / recommended: not tested.</h4>
 Small	30,000 Req/s	4vCore	4Gb Ram	1gbps	DDoS Prot of DC <br>
