@@ -5,11 +5,13 @@ ____
 
 <h5>Owner Netwerkfix and sponser by Netwerkfix.com</h5>
 
+our FriendlyWAF using the specs of Medium
+
 <h4>Specifications / recommended: not tested.</h4>
-Small	5,000 Req/s	4vCore	4Gb Ram	1gbps	DDoS Prot of DC <br>
-Medium	10,000 Req/s	8vCore	16Gb Ram	5gbps	DDoS Prot of DC<br>
-Large	20,000 Req/s	12vCore	32Gb Ram	10gbps	DDoS Prot of DC<br>
-Extra Large	50,000 Req/s	16vCore	32Gb Ram	25gbps	DDoS Prot of DC<br><br>
+Small	5,000 Req/s	4Core	4Gb Ram	1gbps	DDoS Prot of DC <br>
+Medium	10,000 Req/s	8Core	16Gb Ram	5gbps	DDoS Prot of DC<br>
+Large	20,000 Req/s	12Core	32Gb Ram	10gbps	DDoS Prot of DC<br>
+Extra Large	50,000 Req/s	16Core	32Gb Ram	25gbps	DDoS Prot of DC<br><br>
 
 
 Step.1<br>
