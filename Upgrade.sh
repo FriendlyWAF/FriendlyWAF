@@ -22,10 +22,6 @@ systemctl stop snort3
 sleep 2
 systemctl stop snort3-nic.service
 sleep 3
-systemctl disable snort3
-sleep 2
-systemctl disable snort3-nic.service
-sleep 3
 cd /root/
 # Snort Upgrade snort3-3.1.76 => snort3-3.1.77.0
 wget http://mirror.friendlywaf.com/Scripts-CE/snort3-3.1.77.0.zip
