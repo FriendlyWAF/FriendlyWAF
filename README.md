@@ -5,7 +5,7 @@ ____
 
 <h5>Owner Netwerkfix and sponser by Netwerkfix.com</h5>
 
-our FriendlyWAF using the specs of Medium
+our FriendlyWAF using the specs of Large
 
 <h4>Specifications / recommended: not tested.</h4>
 Small	5,000 Req/s	4Core	4Gb Ram	1gbps	DDoS Prot of DC <br>
