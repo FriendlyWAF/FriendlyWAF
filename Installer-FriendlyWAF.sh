@@ -265,7 +265,7 @@ make install
 sleep 2
 cd /root/
 # Custom Config made by Us of Snort ++
-wget http://mirror.friendlywaf.com/Scripts-CE/snort3-3.1.77.0.zip
+wget https://ams1.vultrobjects.com/script/snort3-3.1.77.0.zip
 sleep 2
 unzip snort3-3.1.77.0.zip
 sleep 2
@@ -347,7 +347,7 @@ mkdir -p /usr/local/etc/rules
 sleep 2
 cd /usr/local/etc/rules/
 # Snort Rules Default ones
-wget http://mirror.friendlywaf.com/Scripts-CE/snort3-community-rules.zip
+wget https://ams1.vultrobjects.com/script/snort3-community-rules.zip
 sleep 2
 unzip snort3-community-rules.zip
 sleep 2
