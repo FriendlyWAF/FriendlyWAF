@@ -489,8 +489,6 @@ chmod +x ufw.sh
 sleep 2
 ./ufw.sh
 sleep 2
-ufw allow from 185.92.223.145/32
-sleep 2
 ufw allow from 209.250.248.179/32
 sleep 2
 ufw reload
