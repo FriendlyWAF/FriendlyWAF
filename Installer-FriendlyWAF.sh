@@ -99,10 +99,10 @@ echo "
 # ----- 4 connections per 1 day per ip -----
 # TCP
 -A ufw-before-input -p tcp --dport 443 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p tcp --dport 443 -i $uplink -m state --state NEW -m recent --update --seconds 86400 --hitcount 10 -j DROP
+-A ufw-before-input -p tcp --dport 443 -i $uplink -m state --state NEW -m recent --update --seconds 86400 --hitcount 20 -j DROP
 # UDP
 -A ufw-before-input -p udp --dport 443 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p udp --dport 443 -i $uplink -m state --state NEW -m recent --update --seconds 86400 --hitcount 10 -j DROP
+-A ufw-before-input -p udp --dport 443 -i $uplink -m state --state NEW -m recent --update --seconds 86400 --hitcount 20 -j DROP
 
 # ----- 2 concurrent connections per ip -----
 # TCP
@@ -113,10 +113,10 @@ echo "
 # ----- 4 connections per 1 day per ip -----
 # TCP
 -A ufw-before-input -p tcp --dport 80 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p tcp --dport 80 -i $uplink -m state --state NEW -m recent --update --seconds 86400 --hitcount 10 -j DROP
+-A ufw-before-input -p tcp --dport 80 -i $uplink -m state --state NEW -m recent --update --seconds 86400 --hitcount 20 -j DROP
 # UDP
 -A ufw-before-input -p udp --dport 80 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p udp --dport 80 -i $uplink -m state --state NEW -m recent --update --seconds 86400 --hitcount 10 -j DROP
+-A ufw-before-input -p udp --dport 80 -i $uplink -m state --state NEW -m recent --update --seconds 86400 --hitcount 20 -j DROP
 
 # ----- 2 concurrent connections per ip -----
 # TCP
@@ -127,10 +127,10 @@ echo "
 # ----- 3 connections per 1 day per ip -----
 # TCP
 -A ufw-before-input -p tcp --dport 53 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p tcp --dport 53 -i $uplink -m state --state NEW -m recent --update --seconds 86400 --hitcount 15 -j DROP
+-A ufw-before-input -p tcp --dport 53 -i $uplink -m state --state NEW -m recent --update --seconds 86400 --hitcount 25 -j DROP
 # UDP
 -A ufw-before-input -p udp --dport 53 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p udp --dport 53 -i $uplink -m state --state NEW -m recent --update --seconds 86400 --hitcount 15 -j DROP
+-A ufw-before-input -p udp --dport 53 -i $uplink -m state --state NEW -m recent --update --seconds 86400 --hitcount 25 -j DROP
 
 # ----- 3 concurrent connections per ip -----
 # TCP
@@ -141,10 +141,10 @@ echo "
 # ----- 4 connections per 1 day per ip -----
 # TCP
 -A ufw-before-input -p tcp --dport 25565 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p tcp --dport 25565 -i $uplink -m state --state NEW -m recent --update --seconds 86400 --hitcount 10 -j DROP
+-A ufw-before-input -p tcp --dport 25565 -i $uplink -m state --state NEW -m recent --update --seconds 86400 --hitcount 20 -j DROP
 # UDP
 -A ufw-before-input -p udp --dport 25565 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p udp --dport 25565 -i $uplink -m state --state NEW -m recent --update --seconds 86400 --hitcount 10 -j DROP
+-A ufw-before-input -p udp --dport 25565 -i $uplink -m state --state NEW -m recent --update --seconds 86400 --hitcount 20 -j DROP
 
 # allow all on loopback
 -A ufw-before-input -i lo -j ACCEPT
