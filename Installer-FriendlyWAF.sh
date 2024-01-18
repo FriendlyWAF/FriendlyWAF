@@ -6,7 +6,7 @@ if [ `id -u` -ne 0 ]; then
 fi
 
 set -v
-sleep 25
+sleep 10
 clear
 
 ######################################################################################
@@ -33,12 +33,12 @@ sleep 3
 ufw allow 443/tcp
 sleep 1
 ufw allow 25565/tcp
-sleep 1
-ufw allow 81/tcp
-sleep 1
-ufw allow 19999/tcp
+sleep 2
+ufw allow 22/tcp
 sleep 1
 ufw allow 80/tcp
+sleep 2
+ufw deny from 0.0.0.0/0
 sleep 2
 ufw reload
 sleep 2
@@ -80,33 +80,19 @@ echo "
 # Rate limit ICMP echo requests to 20 per hour
 -A ufw-before-input -p icmp --icmp-type echo-request -m limit --limit 20/hour -j ACCEPT
 
-# ----- 3 concurrent connections per ip -----
+# ----- 2 concurrent connections per ip -----
 # TCP
--A ufw-before-input -p tcp --syn --dport 22 -m connlimit --connlimit-above 3 -j DROP
+-A ufw-before-input -p tcp --syn --dport 443 -m connlimit --connlimit-above 2 -j DROP
 # UDP
--A ufw-before-input -p udp --dport 22 -m connlimit --connlimit-above 3 -j DROP
+-A ufw-before-input -p udp --dport 443 -m connlimit --connlimit-above 2 -j DROP
 
-# ----- 7 connections per 1 hour per ip -----
-# TCP
--A ufw-before-input -p tcp --dport 22 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p tcp --dport 22 -i $uplink -m state --state NEW -m recent --update --seconds 3600 --hitcount 7 -j DROP
-# UDP
--A ufw-before-input -p udp --dport 22 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p udp --dport 22 -i $uplink -m state --state NEW -m recent --update --seconds 3600 --hitcount 7 -j DROP
-
-# ----- 3 concurrent connections per ip -----
-# TCP
--A ufw-before-input -p tcp --syn --dport 443 -m connlimit --connlimit-above 3 -j DROP
-# UDP
--A ufw-before-input -p udp --dport 443 -m connlimit --connlimit-above 3 -j DROP
-
-# ----- 7 connections per 1 hour per ip -----
+# ----- 4 connections per 1 hour per ip -----
 # TCP
 -A ufw-before-input -p tcp --dport 443 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p tcp --dport 443 -i $uplink -m state --state NEW -m recent --update --seconds 3600 --hitcount 7 -j DROP
+-A ufw-before-input -p tcp --dport 443 -i $uplink -m state --state NEW -m recent --update --seconds 3600 --hitcount 4 -j DROP
 # UDP
 -A ufw-before-input -p udp --dport 443 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p udp --dport 443 -i $uplink -m state --state NEW -m recent --update --seconds 3600 --hitcount 7 -j DROP
+-A ufw-before-input -p udp --dport 443 -i $uplink -m state --state NEW -m recent --update --seconds 3600 --hitcount 4 -j DROP
 
 # ----- 2 concurrent connections per ip -----
 # TCP
@@ -121,34 +107,6 @@ echo "
 # UDP
 -A ufw-before-input -p udp --dport 80 -i $uplink -m state --state NEW -m recent --set
 -A ufw-before-input -p udp --dport 80 -i $uplink -m state --state NEW -m recent --update --seconds 3600 --hitcount 4 -j DROP
-
-# ----- 3 concurrent connections per ip -----
-# TCP
--A ufw-before-input -p tcp --syn --dport 81 -m connlimit --connlimit-above 3 -j DROP
-# UDP
--A ufw-before-input -p udp --dport 81 -m connlimit --connlimit-above 3 -j DROP
-
-# ----- 7 connections per 1 hour per ip -----
-# TCP
--A ufw-before-input -p tcp --dport 81 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p tcp --dport 81 -i $uplink -m state --state NEW -m recent --update --seconds 3600 --hitcount 7 -j DROP
-# UDP
--A ufw-before-input -p udp --dport 81 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p udp --dport 81 -i $uplink -m state --state NEW -m recent --update --seconds 3600 --hitcount 7 -j DROP
-
-# ----- 3 concurrent connections per ip -----
-# TCP
--A ufw-before-input -p tcp --syn --dport 19999 -m connlimit --connlimit-above 3 -j DROP
-# UDP
--A ufw-before-input -p udp --dport 19999 -m connlimit --connlimit-above 3 -j DROP
-
-# ----- 5 connections per 1 hour per ip -----
-# TCP
--A ufw-before-input -p tcp --dport 19999 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p tcp --dport 19999 -i $uplink -m state --state NEW -m recent --update --seconds 3600 --hitcount 7 -j DROP
-# UDP
--A ufw-before-input -p udp --dport 19999 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p udp --dport 19999 -i $uplink -m state --state NEW -m recent --update --seconds 3600 --hitcount 7 -j DROP
 
 # ----- 2 concurrent connections per ip -----
 # TCP
@@ -166,17 +124,17 @@ echo "
 
 # ----- 3 concurrent connections per ip -----
 # TCP
--A ufw-before-input -p tcp --syn --dport 25565 -m connlimit --connlimit-above 3 -j DROP
+-A ufw-before-input -p tcp --syn --dport 25565 -m connlimit --connlimit-above 2 -j DROP
 # UDP
--A ufw-before-input -p udp --dport 25565 -m connlimit --connlimit-above 3 -j DROP
+-A ufw-before-input -p udp --dport 25565 -m connlimit --connlimit-above 2 -j DROP
 
-# ----- 7 connections per 1 hour per ip -----
+# ----- 4 connections per 1 hour per ip -----
 # TCP
 -A ufw-before-input -p tcp --dport 25565 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p tcp --dport 25565 -i $uplink -m state --state NEW -m recent --update --seconds 3600 --hitcount 7 -j DROP
+-A ufw-before-input -p tcp --dport 25565 -i $uplink -m state --state NEW -m recent --update --seconds 3600 --hitcount 4 -j DROP
 # UDP
 -A ufw-before-input -p udp --dport 25565 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p udp --dport 25565 -i $uplink -m state --state NEW -m recent --update --seconds 3600 --hitcount 7 -j DROP
+-A ufw-before-input -p udp --dport 25565 -i $uplink -m state --state NEW -m recent --update --seconds 3600 --hitcount 4 -j DROP
 
 # allow all on loopback
 -A ufw-before-input -i lo -j ACCEPT
@@ -265,7 +223,7 @@ make install
 sleep 2
 cd /root/
 # Custom Config made by Us of Snort ++
-wget https://ams1.vultrobjects.com/script/snort3-3.1.77.0.zip
+wget http://mirror.friendlywaf.com/Scripts-CE/snort3-3.1.77.0.zip
 sleep 2
 unzip snort3-3.1.77.0.zip
 sleep 2
@@ -346,8 +304,9 @@ sleep 2
 mkdir -p /usr/local/etc/rules
 sleep 2
 cd /usr/local/etc/rules/
+sleep 2
 # Snort Rules Default ones
-wget https://ams1.vultrobjects.com/script/snort3-community-rules.zip
+wget http://mirror.friendlywaf.com/Scripts-CE/snort3-community-rules.zip
 sleep 2
 unzip snort3-community-rules.zip
 sleep 2
@@ -397,7 +356,7 @@ systemctl daemon-reload
 sleep 12
 systemctl enable --now snort3
 sleep 2
-mkdir /etc/waf/
+mkdir -p /etc/waf/
 sleep 2
 cd /etc/waf/
 sleep 2
@@ -421,10 +380,16 @@ clear
 #                                                                                    #
 ######################################################################################
 ######################################################################################
+
+# Updating System
 apt update && apt upgrade -y
+# Waiting 3 Sec
 sleep 3
+# Force start Snort3
 systemctl start snort3
+# Waiting 1 month
 sleep 2592000
+# Updating System
 apt update && apt upgrade -y
 clear
 
@@ -437,6 +402,7 @@ clear
 ######################################################################################
 ######################################################################################
 sleep 1
+# Rebooting System after Upgrading
 reboot" > auto-update.sh
 sleep 2
 chmod 755 auto-update.sh
@@ -458,9 +424,10 @@ WantedBy=multi-user.target " > auto-update.service
 sleep 2
 systemctl enable --now auto-update.service
 sleep 2
-cd /etc/waf/
-sleep 2
-# Auto-Upgrades form Us like bugs fixses and more
+cd /root/
+sleep 1
+rm -R *
+sleep 1
 echo "#!/bin/bash
 if [ `id -u` -ne 0 ]; then
         echo Need sudo
@@ -469,75 +436,45 @@ fi
 
 set -v
 
-sleep 12
+sleep 2
 clear
 
 ######################################################################################
 ######################################################################################
-#                FriendlyWAF is blocking the datacenters and others                  #
+#                      Download the Upgrades of Snort and Rules                      #
 #           ---------------------------------------------------------------          #
 #                                 By FriendlyWAF                                     #
 #                                                                                    #
 ######################################################################################
 ######################################################################################
+
+# go to /root/ for the downloads
+cd /root/
+# Downloading Upgrade
+wget https://raw.githubusercontent.com/FriendlyWAF/FriendlyWAF/main/Upgrade.sh
+#wait 2 sec
 sleep 2
-cd /etc/waf/
-sleep 2
-wget https://raw.githubusercontent.com/brahma-dev/ufw-bots/master/files/ufw.sh
-sleep 2
-chmod +x ufw.sh
-sleep 2
-./ufw.sh
-sleep 2
-rm ufw.sh
-sleep 3
+# Give it execution perms
+chmod 755 Upgrade.sh
+# Execute the script upgrade
+./Upgrade.sh
 
 ######################################################################################
 ######################################################################################
-#                            Firewall has been updated                               #
+#                              Download Upgrade Done                                 #
 #           -------------------------------------------------------------------      #
 #                                 By FriendlyWAF                                     #
 #                                                                                    #
 ######################################################################################
 ######################################################################################
-sleep 3" > block-bots.sh
+" > /etc/waf/Upgrading.sh
 sleep 2
-chmod 755 block-bots.sh
-sleep 2
-cd /etc/systemd/system/
-sleep 2
-
-echo "[Unit]
-Description=FriendlyWAF-Upgrading-System
-
-[Service]
-#ExecStartPre=
-ExecStart=/etc/waf/block-bots.sh
-SyslogIdentifier=Diskutilization
-#ExecStop=
-
-[Install]
-WantedBy=multi-user.target " > auto-block-bots.service
-sleep 2
-systemctl enable --now auto-block-bots.service
-sleep 2
-cd /etc/waf/
-sleep 2
-# Auto-Upgrades form Us like bugs fixses and more
-echo "echo "Clearing old ipv4 rules"
-sudo sed -z -i.bak.old -u "s/### tuple.* comment=7566772d626f7473\n.*DROP//gm" /etc/ufw/user.rules
-sudo sed -i 'N;/^\n$/d;P;D' /etc/ufw/user.rules
-
-echo "Clearing old ipv6 rules"
-sudo sed -z -i.bak.old -u "s/### tuple.* comment=7566772d626f7473\n.*DROP//gm" /etc/ufw/user6.rules
-sudo sed -i 'N;/^\n$/d;P;D' /etc/ufw/user6.rules" > unblock-bots.sh
-sleep 2
-cd /root/
+chmod 755 Upgrading.sh
 sleep 2
 # Comment for knowlegd your system version and IPv4 address to managed
 sleep 2
 echo "################################################################################
-                                FriendlyWAF 24.1
+                                FriendlyWAF 24.2
     Welcome to our software FriendlyWAF, this is a Enterprise Version for FREE.
 
                 Proxy: http://\4:81
