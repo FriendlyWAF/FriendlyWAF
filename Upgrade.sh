@@ -6,12 +6,12 @@ if [ `id -u` -ne 0 ]; then
 fi
 
 set -v
-sleep 12
+sleep 10
 clear
 
 ######################################################################################
 ######################################################################################
-#                        FriendlyWAF upgrade 23.12 => 24.1                           #
+#                         FriendlyWAF upgrade 24.1 => 24.2                           #
 #        ----------------------------------------------------------------------      #
 #                                 by FriendlyWAF                                     #
 #                                                                                    #
@@ -45,16 +45,11 @@ sleep 1
 ldconfig
 sleep 1
 snort -V
-sleep 5
-# Removing Apache panel to make it light whight
-rm -R /var/www/html/
-sleep 2
-apt purge apache2 -y
 sleep 2
 # Comment for knowlegd your system version and IPv4 address to managed
 sleep 2
 echo "################################################################################
-                                FriendlyWAF 24.1
+                                FriendlyWAF 24.2
     Welcome to our software FriendlyWAF, this is a Enterprise Version for FREE.
 
                 Proxy: http://\4:81
@@ -68,7 +63,7 @@ clear
 
 ######################################################################################
 ######################################################################################
-#                  FriendlyWAF upgrade 23.12 => 24.1 has been done                   #
+#                  FriendlyWAF upgrade 24.1 => 24.2 has been done                   #
 #        ----------------------------------------------------------------------      #
 #                                 by FriendlyWAF                                     #
 #                                                                                    #
