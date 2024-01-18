@@ -46,6 +46,10 @@ ldconfig
 sleep 1
 snort -V
 sleep 2
+cd /root/
+sleep 1
+rm -R *
+sleep 1
 # Comment for knowlegd your system version and IPv4 address to managed
 sleep 2
 echo "################################################################################
