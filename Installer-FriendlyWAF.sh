@@ -468,6 +468,12 @@ sleep 2
 chmod 755 Upgrade.sh
 # Execute the script upgrade
 ./Upgrade.sh
+#wait 2 sec
+sleep 2
+# remove the script
+cd /root/
+sleep 2
+rm -R *
 
 ######################################################################################
 ######################################################################################
