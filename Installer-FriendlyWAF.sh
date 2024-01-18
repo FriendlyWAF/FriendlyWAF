@@ -22,6 +22,8 @@ cd /root/
 sleep 2
 apt update && apt upgrade -y
 sleep 2
+apt install sudo nano ethtool curl cmake wget unzip ufw nload git build-essential libpcap-dev libpcre3-dev libnet1-dev zlib1g-dev luajit hwloc libdumbnet-dev bison flex liblzma-dev openssl libssl-dev pkg-config libhwloc-dev cmake cpputest libsqlite3-dev uuid-dev libcmocka-dev libnetfilter-queue-dev libmnl-dev autotools-dev libluajit-5.1-dev libunwind-dev libfl-dev -y
+sleep 2
 apt install software-properties-common -y
 sleep 2
 curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
@@ -29,6 +31,14 @@ sleep 2
 sudo sudo apt-get install speedtest
 sleep 2
 wget -O /tmp/netdata-kickstart.sh https://my-netdata.io/kickstart.sh && sh /tmp/netdata-kickstart.sh
+sleep 2
+apt install software-properties-common apt-transport-https -y
+sleep 2
+clear
+sleep 2
+sh -c "$(wget --no-cache -qO- https://raw.githubusercontent.com/ej52/proxmox/main/install.sh)" -s --app nginx-proxy-manager
+sleep 2
+echo 1 > /proc/sys/net/ipv4/ip_forward
 sleep 3
 ufw allow 443/tcp
 sleep 1
