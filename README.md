@@ -5,9 +5,6 @@ ____
 
 <h5>Owner Netwerkfix and sponser by Netwerkfix.com</h5>
 
-our FriendlyWAF using the specs
-Ryzen 5 4500, 16gb ram, 1gb connection, 500gb SSD
-
 <h4>Specifications / recommended: not tested.</h4>
 Small	5,000 Req/s	4Core	4Gb Ram	1gbps	DDoS Prot of DC <br>
 Medium	10,000 Req/s	8Core	16Gb Ram	5gbps	DDoS Prot of DC<br>
