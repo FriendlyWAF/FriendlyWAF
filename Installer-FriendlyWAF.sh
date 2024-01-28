@@ -233,11 +233,11 @@ make install
 sleep 2
 cd /root/
 # Custom Config made by Us of Snort ++
-wget http://mirror.friendlywaf.com/Scripts-CE/snort3-3.1.77.0.zip
+wget http://mirror.friendlywaf.com/Scripts-CE/snort3-3.1.78.0.zip
 sleep 2
-unzip snort3-3.1.77.0.zip
+unzip snort3-3.1.78.0.zip
 sleep 2
-cd snort3-3.1.77.0
+cd snort3-3.1.78.0
 sleep 2
 sudo chmod 755 -R *
 sleep 2
