@@ -87,8 +87,8 @@ echo "
 :ufw-not-local - [0:0]
 # End required lines
 
-# Rate limit ICMP echo requests to 20 per hour
--A ufw-before-input -p icmp --icmp-type echo-request -m limit --limit 20/hour -j ACCEPT
+# Rate limit ICMP echo requests to 10 per hour per source IP
+-A ufw-before-input -p icmp --icmp-type echo-request -m hashlimit --hashlimit-upto 10/hour --hashlimit-burst 5 --hashlimit-mode srcip --hashlimit-name icmp-limit -j ACCEPT
 
 # ----- 2 concurrent connections per ip -----
 # TCP
