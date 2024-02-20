@@ -1,64 +1,51 @@
 #!/bin/bash
-# this command give the script sudo perms
-if [ `id -u` -ne 0 ]; then
-        echo Need sudo
-        exit 1
+
+# Check if the script has sudo permissions
+if [ "$(id -u)" -ne 0 ]; then
+    echo "Need sudo"
+    exit 1
 fi
 
 set -v
-sleep 10
-clear
 
-######################################################################################
 ######################################################################################
 #                             FriendlyWAF Cloud Install                              #
 #        ----------------------------------------------------------------------      #
 #                                 by FriendlyWAF                                     #
-#                                                                                    #
 ######################################################################################
-######################################################################################
-sleep 3
 cd /root/
-sleep 2
-apt update && apt upgrade -y
-sleep 2
-apt install sudo nano ethtool curl cmake wget unzip ufw nload git build-essential libpcap-dev libpcre3-dev libnet1-dev zlib1g-dev luajit hwloc libdumbnet-dev bison flex liblzma-dev openssl libssl-dev pkg-config libhwloc-dev cmake cpputest libsqlite3-dev uuid-dev libcmocka-dev libnetfilter-queue-dev libmnl-dev autotools-dev libluajit-5.1-dev libunwind-dev libfl-dev -y
-sleep 2
-apt install software-properties-common -y
-sleep 2
-curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
-sleep 2
-sudo sudo apt-get install speedtest
-sleep 2
-wget -O /tmp/netdata-kickstart.sh https://my-netdata.io/kickstart.sh && sh /tmp/netdata-kickstart.sh
-sleep 2
-apt install software-properties-common apt-transport-https -y
-sleep 2
-clear
-sleep 2
-sh -c "$(wget --no-cache -qO- https://raw.githubusercontent.com/ej52/proxmox/main/install.sh)" -s --app nginx-proxy-manager
-sleep 2
-echo 1 > /proc/sys/net/ipv4/ip_forward
-sleep 3
-ufw allow 443/tcp
-sleep 1
-ufw allow 25565/tcp
-sleep 2
-ufw allow 22/tcp
-sleep 1
-ufw allow 80/tcp
-sleep 2
-ufw deny from 0.0.0.0/0
-sleep 2
-ufw reload
-sleep 2
-cd /etc/ufw/
-sleep 2
 
-# Get a list of active network interfaces
+# Update and upgrade the system
+apt update && apt upgrade -y
+
+# Install required packages
+apt install -y sudo nano ethtool curl cmake wget unzip ufw nload git build-essential libpcap-dev libpcre3-dev libnet1-dev zlib1g-dev luajit hwloc libdumbnet-dev bison flex liblzma-dev openssl libssl-dev pkg-config libhwloc-dev cmake cpputest libsqlite3-dev uuid-dev libcmocka-dev libnetfilter-queue-dev libmnl-dev autotools-dev libluajit-5.1-dev libunwind-dev libfl-dev software-properties-common
+
+# Install Speedtest CLI
+curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
+sudo apt-get install speedtest
+
+# Install Netdata
+wget -O /tmp/netdata-kickstart.sh https://my-netdata.io/kickstart.sh && sh /tmp/netdata-kickstart.sh
+
+# Install NGINX Proxy Manager
+sh -c "$(wget --no-cache -qO- https://raw.githubusercontent.com/ej52/proxmox/main/install.sh)" -s --app nginx-proxy-manager
+
+# Enable IP forwarding
+echo 1 > /proc/sys/net/ipv4/ip_forward
+
+# Configure UFW rules
+ufw allow 443/tcp
+ufw allow 25565/tcp
+ufw allow 22/tcp
+ufw allow 80/tcp
+ufw deny from 0.0.0.0/0
+ufw reload
+cd /etc/ufw/
+
+# Configure custom UFW rules
 active_interfaces=$(ip link | grep 'state UP' | cut -d ':' -f 2)
 
-# Loop through each interface and select the first active one
 uplink=""
 for interface in $active_interfaces; do
     uplink=$interface
@@ -99,10 +86,10 @@ echo "
 # ----- 4 connections per 1 day per ip -----
 # TCP
 -A ufw-before-input -p tcp --dport 443 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p tcp --dport 443 -i $uplink -m state --state NEW -m recent --update --seconds 86400 --hitcount 20 -j DROP
+-A ufw-before-input -p tcp --dport 443 -i $uplink -m state --state NEW -m recent --update --seconds 86400 --hitcount 40 -j DROP
 # UDP
 -A ufw-before-input -p udp --dport 443 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p udp --dport 443 -i $uplink -m state --state NEW -m recent --update --seconds 86400 --hitcount 20 -j DROP
+-A ufw-before-input -p udp --dport 443 -i $uplink -m state --state NEW -m recent --update --seconds 86400 --hitcount 40 -j DROP
 
 # ----- 2 concurrent connections per ip -----
 # TCP
@@ -113,10 +100,10 @@ echo "
 # ----- 4 connections per 1 day per ip -----
 # TCP
 -A ufw-before-input -p tcp --dport 80 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p tcp --dport 80 -i $uplink -m state --state NEW -m recent --update --seconds 86400 --hitcount 20 -j DROP
+-A ufw-before-input -p tcp --dport 80 -i $uplink -m state --state NEW -m recent --update --seconds 86400 --hitcount 40 -j DROP
 # UDP
 -A ufw-before-input -p udp --dport 80 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p udp --dport 80 -i $uplink -m state --state NEW -m recent --update --seconds 86400 --hitcount 20 -j DROP
+-A ufw-before-input -p udp --dport 80 -i $uplink -m state --state NEW -m recent --update --seconds 86400 --hitcount 40 -j DROP
 
 # ----- 2 concurrent connections per ip -----
 # TCP
@@ -127,10 +114,10 @@ echo "
 # ----- 3 connections per 1 day per ip -----
 # TCP
 -A ufw-before-input -p tcp --dport 53 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p tcp --dport 53 -i $uplink -m state --state NEW -m recent --update --seconds 86400 --hitcount 25 -j DROP
+-A ufw-before-input -p tcp --dport 53 -i $uplink -m state --state NEW -m recent --update --seconds 86400 --hitcount 20 -j DROP
 # UDP
 -A ufw-before-input -p udp --dport 53 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p udp --dport 53 -i $uplink -m state --state NEW -m recent --update --seconds 86400 --hitcount 25 -j DROP
+-A ufw-before-input -p udp --dport 53 -i $uplink -m state --state NEW -m recent --update --seconds 86400 --hitcount 20 -j DROP
 
 # ----- 3 concurrent connections per ip -----
 # TCP
@@ -141,10 +128,10 @@ echo "
 # ----- 4 connections per 1 day per ip -----
 # TCP
 -A ufw-before-input -p tcp --dport 25565 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p tcp --dport 25565 -i $uplink -m state --state NEW -m recent --update --seconds 86400 --hitcount 20 -j DROP
+-A ufw-before-input -p tcp --dport 25565 -i $uplink -m state --state NEW -m recent --update --seconds 86400 --hitcount 40 -j DROP
 # UDP
 -A ufw-before-input -p udp --dport 25565 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p udp --dport 25565 -i $uplink -m state --state NEW -m recent --update --seconds 86400 --hitcount 20 -j DROP
+-A ufw-before-input -p udp --dport 25565 -i $uplink -m state --state NEW -m recent --update --seconds 86400 --hitcount 40 -j DROP
 
 # allow all on loopback
 -A ufw-before-input -i lo -j ACCEPT
@@ -193,73 +180,46 @@ COMMIT
 " > before.rules
 sleep 2
 fi
-sleep 2
-ufw reload
-sleep 2
+
+# Install Snort ++
 cd /root/
-# Installing Snort ++ for IPS/IDS
-sleep 2
 wget https://github.com/snort3/libdaq/archive/refs/tags/v3.0.13.zip
-sleep 2
 unzip v3.0.13.zip
-sleep 2
-chmod 755 -R *
-sleep 2
 cd libdaq-3.0.13
-sleep 2
 ./bootstrap
-sleep 2
 ./configure
-sleep 2
 make
-sleep 2
 make install
+# pause 2 sec
 sleep 2
+
+# Install gperftools
 cd /root/
-sleep 2
 wget https://github.com/gperftools/gperftools/releases/download/gperftools-2.13/gperftools-2.13.tar.gz
-sleep 2
 tar xzf gperftools-2.13.tar.gz
-sleep 2
-chmod 755 -R *
-sleep 2
 cd gperftools-2.13
-sleep 2
 ./configure
-sleep 2
 make
-sleep 2
 make install
+# pause 2 sec
 sleep 2
+
+# Install Snort ++
 cd /root/
-# Custom Config made by Us of Snort ++
 wget http://mirror.friendlywaf.com/Scripts-CE/snort3-3.1.78.0.zip
-sleep 2
 unzip snort3-3.1.78.0.zip
-sleep 2
 cd snort3-3.1.78.0
-sleep 2
-sudo chmod 755 -R *
-sleep 2
-./configure_cmake.sh --prefix=/usr/local --enable-tcmalloc
-sleep 2
-cd build
-sleep 2
 chmod 755 -R *
-sleep 2
+./configure_cmake.sh --prefix=/usr/local --enable-tcmalloc
+cd build
+chmod 755 -R *
 make
-sleep 2
 make install
-sleep 1
 ldconfig
-sleep 1
 snort -V
-sleep 5
 
-# Get a list of active network interfaces
+# Configure network interfaces for Snort ++
 active_interfaces=$(ip link | grep 'state UP' | cut -d ':' -f 2)
-
-# Loop through each interface and select the first active one
 uplink=""
 for interface in $active_interfaces; do
     uplink=$interface
@@ -269,29 +229,13 @@ done
 if [ -z "$uplink" ]; then
     echo "No active network interface found."
 else
-sleep 2
-ip link set dev $uplink promisc on
-ethtool -k $uplink | grep receive-offload
-ethtool -K $uplink gro off lro off
-sleep 2
-fi
-cd /etc/systemd/system/
-sleep 2
+    ip link set dev $uplink promisc on
+    ethtool -k $uplink | grep receive-offload
+    ethtool -K $uplink gro off lro off
 
-# Get a list of active network interfaces
-active_interfaces=$(ip link | grep 'state UP' | cut -d ':' -f 2)
-
-# Loop through each interface and select the first active one
-uplink=""
-for interface in $active_interfaces; do
-    uplink=$interface
-    break
-done
-
-if [ -z "$uplink" ]; then
-    echo "No active network interface found."
-else
-echo "[Unit]
+# Configure Snort 3 NIC in promiscuous mode and Disable GRO, LRO on boot
+cat > /etc/systemd/system/snort3-nic.service <<EOL
+[Unit]
 Description=Set Snort 3 NIC in promiscuous mode and Disable GRO, LRO on boot
 After=network.target
 
@@ -303,42 +247,28 @@ TimeoutStartSec=0
 RemainAfterExit=yes
 
 [Install]
-WantedBy=default.target" > snort3-nic.service
-sleep 2
+WantedBy=default.target
+EOL
+
 fi
 systemctl daemon-reload
-sleep 2
 systemctl start snort3-nic.service
 systemctl enable snort3-nic.service
-sleep 2
+
+# Download Snort rules
 mkdir -p /usr/local/etc/rules
-sleep 2
 cd /usr/local/etc/rules/
-sleep 2
-# Snort Rules Default ones
 wget http://mirror.friendlywaf.com/Scripts-CE/snort3-community-rules.zip
-sleep 2
 unzip snort3-community-rules.zip
-sleep 2
+
+# Download Snort OpenAppID
 cd /root/
-sleep 2
 wget https://www.snort.org/downloads/openappid/33380 -O snort-openappid.tar.gz
-sleep 2
 tar -xzvf snort-openappid.tar.gz
-sleep 2
 cp -R odp /usr/local/lib/
-sleep 2
-mkdir -p /var/log/snort
-sleep 12
-snort -c /usr/local/etc/snort/snort.lua
-sleep 5
-cd /etc/systemd/system/
-sleep 2
 
-# Get a list of active network interfaces
+# Configure Snort Daemon
 active_interfaces=$(ip link | grep 'state UP' | cut -d ':' -f 2)
-
-# Loop through each interface and select the first active one
 uplink=""
 for interface in $active_interfaces; do
     uplink=$interface
@@ -348,7 +278,8 @@ done
 if [ -z "$uplink" ]; then
     echo "No active network interface found."
 else
-echo "[Unit]
+cat > /etc/systemd/system/snort3.service <<EOL
+[Unit]
 Description=Snort Daemon
 After=syslog.target network.target
 
@@ -358,139 +289,69 @@ ExecStart=/usr/local/bin/snort -c /usr/local/etc/snort/snort.lua -s 65535 -k non
 ExecStop=/bin/kill -9 $MAINPID
 
 [Install]
-WantedBy=multi-user.target" > snort3.service
-sleep 2
+WantedBy=multi-user.target
+EOL
+
 fi
-sleep 2
 systemctl daemon-reload
-sleep 12
 systemctl enable --now snort3
-sleep 2
+
+# Configure auto-update service
 mkdir -p /etc/waf/
-sleep 2
-cd /etc/waf/
-sleep 2
-# Auto-Upgrades form Us like bugs fixses and more
-echo "#!/bin/bash
-if [ `id -u` -ne 0 ]; then
-        echo Need sudo
-        exit 1
+cat > /etc/waf/auto-update.sh <<EOL
+#!/bin/bash
+if [ \$(id -u) -ne 0 ]; then
+    echo "Need sudo"
+    exit 1
 fi
 
 set -v
 
-sleep 2
-clear
-
-######################################################################################
-######################################################################################
-#                          Updating & Upgrading the System                           #
-#           ---------------------------------------------------------------          #
-#                                 By FriendlyWAF                                     #
-#                                                                                    #
-######################################################################################
-######################################################################################
-
-# Updating System
 apt update && apt upgrade -y
-# Waiting 3 Sec
-sleep 3
-# Force start Snort3
 systemctl start snort3
-# Waiting 1 month
-sleep 2592000
-# Updating System
+sleep 2592000  # 1 month
 apt update && apt upgrade -y
-clear
+EOL
 
-######################################################################################
-######################################################################################
-#                               Reboot the System                                    #
-#           -------------------------------------------------------------------      #
-#                                 By FriendlyWAF                                     #
-#                                                                                    #
-######################################################################################
-######################################################################################
-sleep 1
-# Rebooting System after Upgrading
-reboot" > auto-update.sh
-sleep 2
-chmod 755 auto-update.sh
-sleep 2
-cd /etc/systemd/system/
-sleep 2
+chmod 755 /etc/waf/auto-update.sh
 
-echo "[Unit]
+cat > /etc/systemd/system/auto-update.service <<EOL
+[Unit]
 Description=FriendlyWAF-Upgrading-System
 
 [Service]
-#ExecStartPre=
 ExecStart=/etc/waf/auto-update.sh
 SyslogIdentifier=Diskutilization
-#ExecStop=
 
 [Install]
-WantedBy=multi-user.target " > auto-update.service
-sleep 2
+WantedBy=multi-user.target
+EOL
+
 systemctl enable --now auto-update.service
-sleep 2
-cd /root/
-sleep 1
-rm -R *
-sleep 1
+
+# Configure upgrade script
 echo "#!/bin/bash
-if [ `id -u` -ne 0 ]; then
-        echo Need sudo
-        exit 1
+if [ \$(id -u) -ne 0 ]; then
+    echo "Need sudo"
+    exit 1
 fi
 
 set -v
 
-sleep 2
-clear
-
-######################################################################################
-######################################################################################
-#                      Download the Upgrades of Snort and Rules                      #
-#           ---------------------------------------------------------------          #
-#                                 By FriendlyWAF                                     #
-#                                                                                    #
-######################################################################################
-######################################################################################
-
-# go to /root/ for the downloads
 cd /root/
-# Downloading Upgrade
 wget https://raw.githubusercontent.com/FriendlyWAF/FriendlyWAF/main/Upgrade.sh
-#wait 2 sec
 sleep 2
-# Give it execution perms
 chmod 755 Upgrade.sh
-# Execute the script upgrade
 ./Upgrade.sh
-#wait 2 sec
-sleep 2
-# remove the script
-cd /root/
 sleep 2
 rm -R *
-
-######################################################################################
-######################################################################################
-#                              Download Upgrade Done                                 #
-#           -------------------------------------------------------------------      #
-#                                 By FriendlyWAF                                     #
-#                                                                                    #
-######################################################################################
-######################################################################################
 " > /etc/waf/Upgrading.sh
-sleep 2
-chmod 755 Upgrading.sh
-sleep 2
-# Comment for knowlegd your system version and IPv4 address to managed
-sleep 2
+
+chmod 755 /etc/waf/Upgrading.sh
+
+# Configure system version and IPv4 address to manage
 echo "################################################################################
-                                FriendlyWAF 24.2
+                                FriendlyWAF 24.3
     Welcome to our software FriendlyWAF, this is a Enterprise Version for FREE.
 
                 Proxy: http://\4:81
@@ -499,16 +360,6 @@ echo "##########################################################################
 
 ################################################################################
 " > /etc/issue
-sleep 2
-clear
 
-######################################################################################
-######################################################################################
-#                             System Installer is Done                               #
-#          ---------------------------------------------------------------           #
-#                                 By FriendlyWAF                                     #
-#                                                                                    #
-######################################################################################
-######################################################################################
-sleep 5
+# Rebooting System
 reboot
