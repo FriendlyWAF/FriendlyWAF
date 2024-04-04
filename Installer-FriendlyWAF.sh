@@ -308,9 +308,10 @@ fi
 set -v
 
 apt update && apt upgrade -y
-systemctl start snort3
 sleep 2592000  # 1 month
 apt update && apt upgrade -y
+sleep 2 # wait 2 sec to reboot
+reboot
 EOL
 
 chmod 755 /etc/waf/auto-update.sh
@@ -328,26 +329,6 @@ WantedBy=multi-user.target
 EOL
 
 systemctl enable --now auto-update.service
-
-# Configure upgrade script
-echo "#!/bin/bash
-if [ \$(id -u) -ne 0 ]; then
-    echo "Need sudo"
-    exit 1
-fi
-
-set -v
-
-cd /root/
-wget https://raw.githubusercontent.com/FriendlyWAF/FriendlyWAF/main/Upgrade.sh
-sleep 2
-chmod 755 Upgrade.sh
-./Upgrade.sh
-sleep 2
-rm -R *
-" > /etc/waf/Upgrading.sh
-
-chmod 755 /etc/waf/Upgrading.sh
 
 # Configure system version and IPv4 address to manage
 echo "################################################################################
