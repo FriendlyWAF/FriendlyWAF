@@ -22,9 +22,6 @@ apt update && apt upgrade -y
 # Install requerd tools
 apt-get install apt-transport-https ca-certificates curl software-properties-common -y
 
-# Install NGINX Proxy Manager
-sh -c "$(wget --no-cache -qO- https://raw.githubusercontent.com/ej52/proxmox/main/install.sh)" -s --app nginx-proxy-manager
-
 # Install required packages
 apt install -y sudo nano ethtool curl cmake wget unzip ufw nload git build-essential libpcap-dev libpcre3-dev libnet1-dev zlib1g-dev luajit hwloc libdumbnet-dev bison flex liblzma-dev openssl libssl-dev pkg-config libhwloc-dev cmake cpputest libsqlite3-dev uuid-dev libcmocka-dev libnetfilter-queue-dev libmnl-dev autotools-dev libluajit-5.1-dev libunwind-dev libfl-dev software-properties-common
 
@@ -34,6 +31,9 @@ sudo apt-get install speedtest
 
 # Install Netdata
 wget -O /tmp/netdata-kickstart.sh https://my-netdata.io/kickstart.sh && sh /tmp/netdata-kickstart.sh
+
+# Install NGINX Proxy Manager
+sh -c "$(wget --no-cache -qO- https://raw.githubusercontent.com/ej52/proxmox/main/install.sh)" -s --app nginx-proxy-manager
 
 # Enable IP forwarding
 echo 1 > /proc/sys/net/ipv4/ip_forward
