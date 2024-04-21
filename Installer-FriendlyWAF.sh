@@ -268,7 +268,7 @@ sleep 2
 
 # Install Snort ++
 cd /root/
-wget http://mirror.friendlywaf.com/Scripts-CE/snort3-3.1.83.0.zip
+wget https://mirror.friendlywaf.com/Scripts-CE/snort3-3.1.83.0.zip
 unzip snort3-3.1.83.0.zip
 cd snort3-3.1.83.0
 chmod 755 -R *
@@ -320,7 +320,7 @@ systemctl enable snort3-nic.service
 # Download Snort rules
 mkdir -p /usr/local/etc/rules
 cd /usr/local/etc/rules/
-wget http://mirror.friendlywaf.com/Scripts-CE/snort3-community-rules.zip
+wget https://mirror.friendlywaf.com/Scripts-CE/snort3-community-rules.zip
 unzip snort3-community-rules.zip
 
 # Download Snort OpenAppID
