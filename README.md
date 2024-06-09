@@ -13,4 +13,4 @@ Extra Large	50,000 Req/s	16Core	32Gb Ram	25gbps	DDoS Prot of DC<br><br>
 
 <br><br>
 <h2>Install by step by step.</h2>
-<h6>$ nano run.sh <br> then copy the code of Installer-FriendlyWAF.sh <br> an exec  $ bash run.sh</h6>
+<h6>$ nano run.sh <br> then copy the code of Installer-FriendlyWAF.sh <br> an exec  <br>$ bash run.sh</h6>
