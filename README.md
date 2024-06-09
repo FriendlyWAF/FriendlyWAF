@@ -13,4 +13,4 @@ Extra Large	50,000 Req/s	16Core	32Gb Ram	25gbps	DDoS Prot of DC<br><br>
 
 <br><br>
 <h2>Install by step by step.</h2>
-<h4>sudo wget https://raw.githubusercontent.com/FriendlyWAF/FriendlyWAF/main/Installer-FriendlyWAF.sh && sudo bash Installer-FriendlyWAF.sh</h4>
+<h6>sudo wget https://raw.githubusercontent.com/FriendlyWAF/FriendlyWAF/main/Installer-FriendlyWAF.sh && sudo bash Installer-FriendlyWAF.sh</h6>
