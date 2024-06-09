@@ -245,9 +245,9 @@ fi
 
 # Install Snort ++
 cd /root/
-wget https://github.com/snort3/libdaq/archive/refs/tags/v3.0.13.zip
-unzip v3.0.13.zip
-cd libdaq-3.0.13
+wget https://github.com/snort3/libdaq/archive/refs/tags/v3.0.15.zip
+unzip v3.0.15.zip
+cd libdaq-3.0.15
 ./bootstrap
 ./configure
 make
@@ -257,9 +257,9 @@ sleep 2
 
 # Install gperftools
 cd /root/
-wget https://github.com/gperftools/gperftools/releases/download/gperftools-2.13/gperftools-2.13.tar.gz
-tar xzf gperftools-2.13.tar.gz
-cd gperftools-2.13
+wget https://github.com/gperftools/gperftools/releases/download/gperftools-2.15/gperftools-2.15.tar.gz
+tar xzf gperftools-2.15.tar.gz
+cd gperftools-2.15
 ./configure
 make
 make install
@@ -268,9 +268,9 @@ sleep 2
 
 # Install Snort ++
 cd /root/
-wget https://mirror.friendlywaf.com/Scripts-CE/snort3-3.1.83.0.zip
-unzip snort3-3.1.83.0.zip
-cd snort3-3.1.83.0
+wget https://github.com/FriendlyWAF/FriendlyWAF/raw/main/snort3-3.2.2.0.zip
+unzip snort3-3.2.2.0.zip
+cd snort3-3.2.2.0
 chmod 755 -R *
 ./configure_cmake.sh --prefix=/usr/local --enable-tcmalloc
 cd build
@@ -320,7 +320,7 @@ systemctl enable snort3-nic.service
 # Download Snort rules
 mkdir -p /usr/local/etc/rules
 cd /usr/local/etc/rules/
-wget https://mirror.friendlywaf.com/Scripts-CE/snort3-community-rules.zip
+wget https://github.com/FriendlyWAF/FriendlyWAF/raw/main/snort3-community-rules.zip
 unzip snort3-community-rules.zip
 
 # Download Snort OpenAppID
