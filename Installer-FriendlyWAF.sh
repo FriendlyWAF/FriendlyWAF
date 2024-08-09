@@ -236,9 +236,9 @@ fi
 
 # Install Snort ++
 cd /root/
-wget https://github.com/snort3/libdaq/archive/refs/tags/v3.0.15.zip
-unzip v3.0.15.zip
-cd libdaq-3.0.15
+wget https://github.com/snort3/libdaq/archive/refs/tags/v3.0.16.zip
+unzip v3.0.16.zip
+cd libdaq-3.0.16
 ./bootstrap
 ./configure
 make
@@ -259,9 +259,9 @@ sleep 2
 
 # Install Snort ++
 cd /root/
-wget https://github.com/FriendlyWAF/FriendlyWAF/raw/main/snort3-3.2.2.0.zip
-unzip snort3-3.2.2.0.zip
-cd snort3-3.2.2.0
+wget https://github.com/FriendlyWAF/FriendlyWAF/raw/main/snort3-3.3.2.0.zip
+unzip snort3-3.3.2.0.zip
+cd snort3-3.3.2.0
 chmod 755 -R *
 ./configure_cmake.sh --prefix=/usr/local --enable-tcmalloc
 cd build
