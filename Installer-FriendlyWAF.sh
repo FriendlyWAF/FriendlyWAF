@@ -20,13 +20,6 @@ apt install -y sudo nano ethtool curl cmake wget unzip ufw nload git build-essen
 # Install NGINX Proxy Manager
 sh -c "$(wget --no-cache -qO- https://raw.githubusercontent.com/ej52/proxmox/main/install.sh)" -s --app nginx-proxy-manager
 
-# Install Speedtest CLI
-curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
-sudo apt-get install speedtest
-
-# Install Netdata
-wget -O /tmp/netdata-kickstart.sh https://my-netdata.io/kickstart.sh && sh /tmp/netdata-kickstart.sh
-
 # Enable IP forwarding
 echo 1 > /proc/sys/net/ipv4/ip_forward
 
@@ -80,13 +73,13 @@ echo "
 # UDP
 -A ufw-before-input -p udp --dport 22 -m connlimit --connlimit-above 4 -j DROP
 
-# ----- 8 connections per 5 min per ip -----
+# ----- 2 connections per 5 min per ip -----
 # TCP
 -A ufw-before-input -p tcp --dport 22 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p tcp --dport 22 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 8 -j DROP
+-A ufw-before-input -p tcp --dport 22 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 2 -j DROP
 # UDP
 -A ufw-before-input -p udp --dport 22 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p udp --dport 22 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 8 -j DROP
+-A ufw-before-input -p udp --dport 22 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 2 -j DROP
 
 # ----- 4 concurrent connections per ip -----
 # TCP
@@ -94,13 +87,13 @@ echo "
 # UDP
 -A ufw-before-input -p udp --dport 443 -m connlimit --connlimit-above 4 -j DROP
 
-# ----- 8 connections per 5 min per ip -----
+# ----- 2 connections per 5 min per ip -----
 # TCP
 -A ufw-before-input -p tcp --dport 443 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p tcp --dport 443 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 8 -j DROP
+-A ufw-before-input -p tcp --dport 443 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 2 -j DROP
 # UDP
 -A ufw-before-input -p udp --dport 443 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p udp --dport 443 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 8 -j DROP
+-A ufw-before-input -p udp --dport 443 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 2 -j DROP
 
 # ----- 4 concurrent connections per ip -----
 # TCP
@@ -108,13 +101,13 @@ echo "
 # UDP
 -A ufw-before-input -p udp --dport 80 -m connlimit --connlimit-above 4 -j DROP
 
-# ----- 8 connections per 5 min per ip -----
+# ----- 2 connections per 5 min per ip -----
 # TCP
 -A ufw-before-input -p tcp --dport 80 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p tcp --dport 80 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 8 -j DROP
+-A ufw-before-input -p tcp --dport 80 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 2 -j DROP
 # UDP
 -A ufw-before-input -p udp --dport 80 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p udp --dport 80 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 8 -j DROP
+-A ufw-before-input -p udp --dport 80 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 2 -j DROP
 
 # ----- 4 concurrent connections per ip -----
 # TCP
@@ -122,13 +115,13 @@ echo "
 # UDP
 -A ufw-before-input -p udp --dport 53 -m connlimit --connlimit-above 4 -j DROP
 
-# ----- 8 connections per 5 min per ip -----
+# ----- 2 connections per 5 min per ip -----
 # TCP
 -A ufw-before-input -p tcp --dport 53 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p tcp --dport 53 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 8 -j DROP
+-A ufw-before-input -p tcp --dport 53 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 2 -j DROP
 # UDP
 -A ufw-before-input -p udp --dport 53 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p udp --dport 53 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 8 -j DROP
+-A ufw-before-input -p udp --dport 53 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 2 -j DROP
 
 # ----- 4 concurrent connections per ip -----
 # TCP
@@ -136,13 +129,13 @@ echo "
 # UDP
 -A ufw-before-input -p udp --dport 25565 -m connlimit --connlimit-above 4 -j DROP
 
-# ----- 8 connections per 5 min per ip -----
+# ----- 2 connections per 5 min per ip -----
 # TCP
 -A ufw-before-input -p tcp --dport 25565 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p tcp --dport 25565 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 8 -j DROP
+-A ufw-before-input -p tcp --dport 25565 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 2 -j DROP
 # UDP
 -A ufw-before-input -p udp --dport 25565 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p udp --dport 25565 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 8 -j DROP
+-A ufw-before-input -p udp --dport 25565 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 2 -j DROP
 
 # ----- 4 concurrent connections per ip -----
 # TCP
@@ -150,13 +143,13 @@ echo "
 # UDP
 -A ufw-before-input -p udp --dport 3389 -m connlimit --connlimit-above 4 -j DROP
 
-# ----- 8 connections per 5 min per ip -----
+# ----- 2 connections per 5 min per ip -----
 # TCP
 -A ufw-before-input -p tcp --dport 3389 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p tcp --dport 3389 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 8 -j DROP
+-A ufw-before-input -p tcp --dport 3389 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 2 -j DROP
 # UDP
 -A ufw-before-input -p udp --dport 3389 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p udp --dport 3389 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 8 -j DROP
+-A ufw-before-input -p udp --dport 3389 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 2 -j DROP
 
 # ----- 4 concurrent connections per ip -----
 # TCP
@@ -164,13 +157,13 @@ echo "
 # UDP
 -A ufw-before-input -p udp --dport 8080 -m connlimit --connlimit-above 4 -j DROP
 
-# ----- 8 connections per 5 min per ip -----
+# ----- 2 connections per 5 min per ip -----
 # TCP
 -A ufw-before-input -p tcp --dport 8080 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p tcp --dport 8080 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 8 -j DROP
+-A ufw-before-input -p tcp --dport 8080 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 2 -j DROP
 # UDP
 -A ufw-before-input -p udp --dport 8080 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p udp --dport 8080 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 8 -j DROP
+-A ufw-before-input -p udp --dport 8080 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 2 -j DROP
 
 # ----- 4 concurrent connections per ip -----
 # TCP
@@ -178,13 +171,13 @@ echo "
 # UDP
 -A ufw-before-input -p udp --dport 22 -m connlimit --connlimit-above 4 -j DROP
 
-# ----- 8 connections per 5 min per ip -----
+# ----- 2 connections per 5 min per ip -----
 # TCP
 -A ufw-before-input -p tcp --dport 19999 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p tcp --dport 19999 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 8 -j DROP
+-A ufw-before-input -p tcp --dport 19999 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 2 -j DROP
 # UDP
 -A ufw-before-input -p udp --dport 19999 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p udp --dport 19999 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 8 -j DROP
+-A ufw-before-input -p udp --dport 19999 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 2 -j DROP
 
 # allow all on loopback
 -A ufw-before-input -i lo -j ACCEPT
@@ -385,7 +378,7 @@ systemctl enable --now auto-update.service
 
 # Configure system version and IPv4 address to manage
 echo "################################################################################
-                                FriendlyWAF 24.6
+                                FriendlyWAF 24.10
     Welcome to our software FriendlyWAF, this is a Enterprise Version for FREE.
 
                 Proxy: http://\4:81
