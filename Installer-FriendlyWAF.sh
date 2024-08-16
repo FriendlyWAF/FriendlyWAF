@@ -65,7 +65,7 @@ echo "
 # End required lines
 
 # Rate limit ICMP echo requests to 10 per hour per source IP
--A ufw-before-input -p icmp --icmp-type echo-request -m hashlimit --hashlimit-upto 10/hour --hashlimit-burst 5 --hashlimit-mode srcip --hashlimit-name icmp-limit -j ACCEPT
+-A ufw-before-input -p icmp --icmp-type echo-request -m hashlimit --hashlimit-upto 10/hour --hashlimit-burst 4 --hashlimit-mode srcip --hashlimit-name icmp-limit -j ACCEPT
 
 # ----- 4 concurrent connections per ip -----
 # TCP
@@ -73,13 +73,13 @@ echo "
 # UDP
 -A ufw-before-input -p udp --dport 22 -m connlimit --connlimit-above 4 -j DROP
 
-# ----- 2 connections per 5 min per ip -----
+# ----- 4 connections per 5 min per ip -----
 # TCP
 -A ufw-before-input -p tcp --dport 22 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p tcp --dport 22 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 2 -j DROP
+-A ufw-before-input -p tcp --dport 22 -i $uplink -m state --state NEW -m recent --update --seconds 200 --hitcount 4 -j DROP
 # UDP
 -A ufw-before-input -p udp --dport 22 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p udp --dport 22 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 2 -j DROP
+-A ufw-before-input -p udp --dport 22 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 4 -j DROP
 
 # ----- 4 concurrent connections per ip -----
 # TCP
@@ -87,13 +87,13 @@ echo "
 # UDP
 -A ufw-before-input -p udp --dport 443 -m connlimit --connlimit-above 4 -j DROP
 
-# ----- 2 connections per 5 min per ip -----
+# ----- 4 connections per 5 min per ip -----
 # TCP
 -A ufw-before-input -p tcp --dport 443 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p tcp --dport 443 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 2 -j DROP
+-A ufw-before-input -p tcp --dport 443 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 4 -j DROP
 # UDP
 -A ufw-before-input -p udp --dport 443 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p udp --dport 443 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 2 -j DROP
+-A ufw-before-input -p udp --dport 443 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 4 -j DROP
 
 # ----- 4 concurrent connections per ip -----
 # TCP
@@ -101,13 +101,13 @@ echo "
 # UDP
 -A ufw-before-input -p udp --dport 80 -m connlimit --connlimit-above 4 -j DROP
 
-# ----- 2 connections per 5 min per ip -----
+# ----- 4 connections per 5 min per ip -----
 # TCP
 -A ufw-before-input -p tcp --dport 80 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p tcp --dport 80 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 2 -j DROP
+-A ufw-before-input -p tcp --dport 80 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 4 -j DROP
 # UDP
 -A ufw-before-input -p udp --dport 80 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p udp --dport 80 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 2 -j DROP
+-A ufw-before-input -p udp --dport 80 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 4 -j DROP
 
 # ----- 4 concurrent connections per ip -----
 # TCP
@@ -115,13 +115,13 @@ echo "
 # UDP
 -A ufw-before-input -p udp --dport 53 -m connlimit --connlimit-above 4 -j DROP
 
-# ----- 2 connections per 5 min per ip -----
+# ----- 4 connections per 5 min per ip -----
 # TCP
 -A ufw-before-input -p tcp --dport 53 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p tcp --dport 53 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 2 -j DROP
+-A ufw-before-input -p tcp --dport 53 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 4 -j DROP
 # UDP
 -A ufw-before-input -p udp --dport 53 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p udp --dport 53 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 2 -j DROP
+-A ufw-before-input -p udp --dport 53 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 4 -j DROP
 
 # ----- 4 concurrent connections per ip -----
 # TCP
@@ -129,13 +129,13 @@ echo "
 # UDP
 -A ufw-before-input -p udp --dport 25565 -m connlimit --connlimit-above 4 -j DROP
 
-# ----- 2 connections per 5 min per ip -----
+# ----- 4 connections per 5 min per ip -----
 # TCP
 -A ufw-before-input -p tcp --dport 25565 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p tcp --dport 25565 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 2 -j DROP
+-A ufw-before-input -p tcp --dport 25565 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 4 -j DROP
 # UDP
 -A ufw-before-input -p udp --dport 25565 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p udp --dport 25565 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 2 -j DROP
+-A ufw-before-input -p udp --dport 25565 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 4 -j DROP
 
 # ----- 4 concurrent connections per ip -----
 # TCP
@@ -143,13 +143,13 @@ echo "
 # UDP
 -A ufw-before-input -p udp --dport 3389 -m connlimit --connlimit-above 4 -j DROP
 
-# ----- 2 connections per 5 min per ip -----
+# ----- 4 connections per 5 min per ip -----
 # TCP
 -A ufw-before-input -p tcp --dport 3389 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p tcp --dport 3389 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 2 -j DROP
+-A ufw-before-input -p tcp --dport 3389 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 4 -j DROP
 # UDP
 -A ufw-before-input -p udp --dport 3389 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p udp --dport 3389 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 2 -j DROP
+-A ufw-before-input -p udp --dport 3389 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 4 -j DROP
 
 # ----- 4 concurrent connections per ip -----
 # TCP
@@ -157,13 +157,13 @@ echo "
 # UDP
 -A ufw-before-input -p udp --dport 8080 -m connlimit --connlimit-above 4 -j DROP
 
-# ----- 2 connections per 5 min per ip -----
+# ----- 4 connections per 5 min per ip -----
 # TCP
 -A ufw-before-input -p tcp --dport 8080 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p tcp --dport 8080 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 2 -j DROP
+-A ufw-before-input -p tcp --dport 8080 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 4 -j DROP
 # UDP
 -A ufw-before-input -p udp --dport 8080 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p udp --dport 8080 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 2 -j DROP
+-A ufw-before-input -p udp --dport 8080 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 4 -j DROP
 
 # ----- 4 concurrent connections per ip -----
 # TCP
@@ -171,13 +171,13 @@ echo "
 # UDP
 -A ufw-before-input -p udp --dport 22 -m connlimit --connlimit-above 4 -j DROP
 
-# ----- 2 connections per 5 min per ip -----
+# ----- 4 connections per 5 min per ip -----
 # TCP
 -A ufw-before-input -p tcp --dport 19999 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p tcp --dport 19999 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 2 -j DROP
+-A ufw-before-input -p tcp --dport 19999 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 4 -j DROP
 # UDP
 -A ufw-before-input -p udp --dport 19999 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p udp --dport 19999 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 2 -j DROP
+-A ufw-before-input -p udp --dport 19999 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 4 -j DROP
 
 # allow all on loopback
 -A ufw-before-input -i lo -j ACCEPT
