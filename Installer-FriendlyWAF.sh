@@ -1,5 +1,7 @@
 #!/bin/bash
 sleep 5
+# Disable the existing UFW
+ufw --force disable
 
 ######################################################################################
 #                             FriendlyWAF Cloud Install                              #
@@ -30,6 +32,7 @@ ufw allow 3389/tcp
 ufw allow 8080/tcp
 ufw allow 22/tcp
 ufw allow 80/tcp
+ufw --force enable
 ufw reload
 cd /etc/ufw/
 
