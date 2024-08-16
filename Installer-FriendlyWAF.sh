@@ -19,22 +19,43 @@ apt-get install apt-transport-https ca-certificates curl software-properties-com
 # Install required packages
 apt install -y sudo nano ethtool curl cmake wget unzip ufw nload git build-essential libpcap-dev libpcre3-dev libnet1-dev zlib1g-dev luajit hwloc libdumbnet-dev bison flex liblzma-dev openssl libssl-dev pkg-config libhwloc-dev cmake cpputest libsqlite3-dev uuid-dev libcmocka-dev libnetfilter-queue-dev libmnl-dev autotools-dev libluajit-5.1-dev libunwind-dev libfl-dev software-properties-common
 
+# Wait 10 Seconds
+sleep 10
+
 # Install NGINX Proxy Manager
 sh -c "$(wget --no-cache -qO- https://raw.githubusercontent.com/ej52/proxmox/main/install.sh)" -s --app nginx-proxy-manager
 
-# Enable IP forwarding
-echo 1 > /proc/sys/net/ipv4/ip_forward
+# Make work folder
+mkdir -p /etc/waf/
 
 # Configure UFW rules
+ufw allow 81/tcp
 ufw allow 443/tcp
 ufw allow 25565/tcp
 ufw allow 3389/tcp
-ufw allow 8080/tcp
 ufw allow 22/tcp
 ufw allow 80/tcp
 ufw --force enable
 ufw reload
 cd /etc/ufw/
+
+# Make to block datacenters
+echo "sudo wget https://raw.githubusercontent.com/brahma-dev/ufw-bots/master/files/ufw.sh
+cat ufw.sh
+sudo chmod +x ufw.sh
+sudo ./ufw.sh" > /etc/waf/update-ufw.sh
+sudo chmod 744 /etc/waf/update-ufw.sh
+sudo bash /etc/waf/update-ufw.sh
+
+# Make to block datacenters
+echo "echo "Clearing old ipv4 rules"
+sudo sed -z -i.bak.old -u "s/### tuple.* comment=7566772d626f7473\n.*DROP//gm" /etc/ufw/user.rules
+sudo sed -i 'N;/^\n$/d;P;D' /etc/ufw/user.rules
+
+echo "Clearing old ipv6 rules"
+sudo sed -z -i.bak.old -u "s/### tuple.* comment=7566772d626f7473\n.*DROP//gm" /etc/ufw/user6.rules
+sudo sed -i 'N;/^\n$/d;P;D' /etc/ufw/user6.rules" > /etc/waf/remove-bots.sh
+sudo chmod 744 /etc/waf/remove-bots.sh
 
 # Configure custom UFW rules
 active_interfaces=$(ip link | grep 'state UP' | cut -d ':' -f 2)
@@ -114,6 +135,20 @@ echo "
 
 # ----- 4 concurrent connections per ip -----
 # TCP
+-A ufw-before-input -p tcp --syn --dport 81 -m connlimit --connlimit-above 4 -j DROP
+# UDP
+-A ufw-before-input -p udp --dport 81 -m connlimit --connlimit-above 4 -j DROP
+
+# ----- 4 connections per 5 min per ip -----
+# TCP
+-A ufw-before-input -p tcp --dport 81 -i $uplink -m state --state NEW -m recent --set
+-A ufw-before-input -p tcp --dport 81 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 4 -j DROP
+# UDP
+-A ufw-before-input -p udp --dport 81 -i $uplink -m state --state NEW -m recent --set
+-A ufw-before-input -p udp --dport 81 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 4 -j DROP
+
+# ----- 4 concurrent connections per ip -----
+# TCP
 -A ufw-before-input -p tcp --syn --dport 53 -m connlimit --connlimit-above 4 -j DROP
 # UDP
 -A ufw-before-input -p udp --dport 53 -m connlimit --connlimit-above 4 -j DROP
@@ -167,20 +202,6 @@ echo "
 # UDP
 -A ufw-before-input -p udp --dport 8080 -i $uplink -m state --state NEW -m recent --set
 -A ufw-before-input -p udp --dport 8080 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 4 -j DROP
-
-# ----- 4 concurrent connections per ip -----
-# TCP
--A ufw-before-input -p tcp --syn --dport 22 -m connlimit --connlimit-above 4 -j DROP
-# UDP
--A ufw-before-input -p udp --dport 22 -m connlimit --connlimit-above 4 -j DROP
-
-# ----- 4 connections per 5 min per ip -----
-# TCP
--A ufw-before-input -p tcp --dport 19999 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p tcp --dport 19999 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 4 -j DROP
-# UDP
--A ufw-before-input -p udp --dport 19999 -i $uplink -m state --state NEW -m recent --set
--A ufw-before-input -p udp --dport 19999 -i $uplink -m state --state NEW -m recent --update --seconds 300 --hitcount 4 -j DROP
 
 # allow all on loopback
 -A ufw-before-input -i lo -j ACCEPT
@@ -346,7 +367,6 @@ systemctl daemon-reload
 systemctl enable --now snort3
 
 # Configure auto-update service
-mkdir -p /etc/waf/
 cat > /etc/waf/auto-update.sh <<EOL
 #!/bin/bash
 if [ \$(id -u) -ne 0 ]; then
