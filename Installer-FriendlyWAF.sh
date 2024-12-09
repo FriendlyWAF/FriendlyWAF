@@ -276,9 +276,9 @@ sleep 2
 
 # Install Snort ++
 cd /root/
-wget https://github.com/FriendlyWAF/FriendlyWAF/raw/main/snort3-3.3.2.0.zip
-unzip snort3-3.3.2.0.zip
-cd snort3-3.3.2.0
+wget https://github.com/FriendlyWAF/FriendlyWAF/raw/main/snort3-3.6.0.0.zip
+unzip snort3-3.6.0.0.zip
+cd snort3-3.6.0.0
 chmod 755 -R *
 ./configure_cmake.sh --prefix=/usr/local --enable-tcmalloc
 cd build
@@ -401,7 +401,7 @@ systemctl enable --now auto-update.service
 
 # Configure system version and IPv4 address to manage
 echo "################################################################################
-                                FriendlyWAF 24.10
+                                FriendlyWAF 25.1
     Welcome to our software FriendlyWAF, this is a Enterprise Version for FREE.
 
                 Proxy: http://\4:81
