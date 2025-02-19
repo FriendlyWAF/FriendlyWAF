@@ -13,4 +13,6 @@ Extra Large	20,000 Req/s	16vCore	32Gb Ram	25gbps	DDoS Prot of DC<br><br>
 
 <br><br>
 <h4>Recommended Debian OS only</h3>
-<h5>wget https://ams1.vultrobjects.com/friendlywaf/install.FRIENDLY-25.6-2025.sh && bash install.FRIENDLY-25.6-2025.sh</h3>
+<h5>wget https://ams1.vultrobjects.com/friendlywaf/install.FRIENDLY-25.6-2025.sh <br>
+chmod +x install.FRIENDLY-25.6-2025.sh <br>
+sudo ./install.FRIENDLY-25.6-2025.sh</h3>
