@@ -1,7 +1,7 @@
 <h2>FriendlyWAF</h2>
 ____
 
-<h4>FriendlyWAF is A OpenSource Web Application Firewall</h4>
+<h3>FriendlyWAF is A OpenSource Web Application Firewall</h3>
 
 <h5>Owner Netwerkfix and sponser by Netwerkfix.com</h5>
 
@@ -12,5 +12,5 @@ Large	10,000 Req/s	8vCore	16Gb Ram	10gbps	DDoS Prot of DC<br>
 Extra Large	20,000 Req/s	16vCore	32Gb Ram	25gbps	DDoS Prot of DC<br><br>
 
 <br><br>
-<h3>Recommended Debian OS only</h3>
-<h3>wget https://ams1.vultrobjects.com/friendlywaf/install.FRIENDLY-25.6-2025.sh && bash install.FRIENDLY-25.6-2025.sh</h3>
+<h4>Recommended Debian OS only</h3>
+<h5>wget https://ams1.vultrobjects.com/friendlywaf/install.FRIENDLY-25.6-2025.sh && bash install.FRIENDLY-25.6-2025.sh</h3>
