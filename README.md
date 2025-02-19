@@ -12,5 +12,5 @@ Large	10,000 Req/s	8vCore	16Gb Ram	10gbps	DDoS Prot of DC<br>
 Extra Large	20,000 Req/s	16vCore	32Gb Ram	25gbps	DDoS Prot of DC<br><br>
 
 <br><br>
-<h2>Install by step by step.</h2>
-<h6>$ nano run.sh <br> then copy the code of Installer-FriendlyWAF.sh <br> an exec  <br>$ bash run.sh</h6>
+<h3>Recommended Debian OS only</h3>
+<h3>wget https://ams1.vultrobjects.com/friendlywaf/install.FRIENDLY-25.6-2025.sh && bash install.FRIENDLY-25.6-2025.sh</h3>
