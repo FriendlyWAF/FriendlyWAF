@@ -3,7 +3,7 @@ ____
 
 <h3>FriendlyWAF is A OpenSource Web Application Firewall</h3>
 
-<h5>Owner Netwerkfix and sponser by Netwerkfix.com</h5>
+<h5>Owner Damien and sponser by damiencoop.be</h5>
 
 <h4>Specifications / recommended: Debian 12 Bookworm</h4>
 Small	2,000 Req/s	4vCore	4Gb Ram	1gbps	DDoS Prot of DC <br>
