@@ -13,4 +13,4 @@ Extra Large	20,000 Req/s	16vCore	32Gb Ram	25gbps	DDoS Prot of DC<br><br>
 
 <br><br>
 <h4>Recommended Debian OS only</h3>
-<h5>wget https://ams1.vultrobjects.com/friendlywaf/friendlyinstaller.sh && cat friendlyinstaller.sh | tr -d '\r' > fixed_installer.sh && mv fixed_installer.sh friendlyinstaller.sh && bash friendlyinstaller.sh</h5>
+<h5>wget https://mirror.damiencoop.be/friendlyinstaller.sh && cat friendlyinstaller.sh | tr -d '\r' > fixed_installer.sh && mv fixed_installer.sh friendlyinstaller.sh && bash friendlyinstaller.sh</h5>
